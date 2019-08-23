@@ -1,0 +1,23 @@
+{
+  "name": "serverless-lambda",
+  "version": "1.0.0",
+  "description": "Code for serverless presentation demo using AWS Lambda.",
+  "main": "serverless.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bolzon/serverless-lambda.git"
+  },
+  "author": "Bolzon <blzn@mail.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bolzon/serverless-lambda/issues"
+  },
+  "homepage": "https://github.com/bolzon/serverless-lambda#readme",
+  "dependencies": {
+    "aws-sdk": "^2.516.0",
+    "openpgp": "^4.6.0"
+  }
+}
