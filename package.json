@@ -18,6 +18,7 @@
   "homepage": "https://github.com/bolzon/serverless-lambda#readme",
   "dependencies": {
     "aws-sdk": "^2.516.0",
+    "joi": "^14.3.1",
     "openpgp": "^4.6.0"
   }
 }

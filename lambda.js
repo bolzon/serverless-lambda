@@ -1,6 +1,8 @@
 'use strict';
 
 const { encrypt } = require('./sec');
+const { Storage } = require('./storage');
+const { validate } = require('./body-validation');
 
 /**
  * This function is called when an S3
@@ -8,18 +10,14 @@ const { encrypt } = require('./sec');
  */
 exports.encryptS3File = async event => {
   const body = event.body || event;
-  const binFile = Buffer.from(body.base64file, 'base64');
-  const encrypted = await encrypt(binFile, body.isBinary);
-
-  // TODO implement S3 retrieval, encryption and storing.
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      isBinary,
-      encrypted: Buffer.isBuffer(encrypted) ? encrypted.toString('base64') : encrypted
-    }),
-    headers: { 'Content-type': 'application/json' }
-  };
+  for (const record of body.Records || []) {
+    const bucketName = record.s3.bucket.name;
+    const keyName = record.s3.bucket.object.key;
+    const fileBuffer = await Storage.getFile(bucketName, keyName);
+    const encryptedFile = await encrypt(fileBuffer);
+    await Storage.putFile(bucketName, keyName, encryptedFile);
+  }
+  return ok();
 };
 
 /**
@@ -28,10 +26,31 @@ exports.encryptS3File = async event => {
  */
 exports.saveS3File = async event => {
   const body = event.body || event;
-  // TODO implement S3 file encryption + storing
-  return {
-    statusCode: 200,
-    body: JSON.stringify({}),
-    headers: { 'Content-type': 'application/json' }
-  };
+  try {
+    await validate(body);
+  } catch (ex) {
+    return nok(ex.stack || ex.message || ex);
+  }
+  const fileBuffer = Buffer.from(body.base64file, 'base64');
+  const encryptedFile = await encrypt(fileBuffer, true);
+  await Storage.putFile(body.bucketName, body.keyName, encryptedFile);
+  return ok();
 };
+
+/**
+ * Create OK response payload.
+ */
+const ok = (body = null) => ({
+  statusCode: 200,
+  body: typeof body === 'string' ? body : JSON.stringify(body || {}),
+  headers: { 'Content-type': 'application/json' }
+});
+
+/**
+ * Create error response payload (bad request = 400).
+ */
+const nok = error => ({
+  statusCode: 400,
+  body: JSON.stringify({ error }),
+  headers: { 'Content-type': 'application/json' }
+});
