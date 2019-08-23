@@ -22,7 +22,7 @@ exports.encryptS3File = async event => {
 
 /**
  * This function is called when the API gateway
- * is called passing a new file to be stored ino S3.
+ * is called passing a new file to be stored into S3.
  */
 exports.saveS3File = async event => {
   const body = event.body || event;
@@ -32,8 +32,7 @@ exports.saveS3File = async event => {
     return nok(ex.stack || ex.message || ex);
   }
   const fileBuffer = Buffer.from(body.base64file, 'base64');
-  const encryptedFile = await encrypt(fileBuffer, true);
-  await Storage.putFile(body.bucketName, body.keyName, encryptedFile);
+  await Storage.putFile(body.bucketName, body.keyName, fileBuffer);
   return ok();
 };
 
