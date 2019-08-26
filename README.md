@@ -6,7 +6,7 @@ Code for serverless presentation demo using AWS Lambda.
 
 You must have an [AWS account](https://aws.amazon.com/resources/create-account/) to run this example.
 
-1) Generate a PGP key (see [PGP section](#PGP)).
+1) Generate a PGP key (see [PGP section](#pgp)).
 
 2) Create a [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html#create-bucket-intro) on AWS.
 
