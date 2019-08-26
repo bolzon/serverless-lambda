@@ -17,23 +17,18 @@ exports.encryptS3File = async event => {
   for (const record of body.Records || []) {
     const objectSize = record.s3.object.size;
     const objectKey = record.s3.object.key;
-    const mustEncrypt = !reS3EncryptedPrefix.test(objectKey);
-    console.log(`mustEncrypt = ${mustEncrypt}`);
-    if (!mustEncrypt || objectSize === 0) {
+    if (reS3EncryptedPrefix.test(objectKey) || objectSize === 0) {
+      console.log(`Skipping ${objectKey}`);
       continue; // skip this record
     }
     const bucketName = record.s3.bucket.name;
     const file = await Storage.getFile(bucketName, objectKey);
-    let fileBuffer = file.content;
-    if (mustEncrypt) {
-      fileBuffer = await encrypt(fileBuffer);
-    }
+    const fileBuffer = await encrypt(file.content);
     const destObjectKey = `${S3_ENCRYPTED_PREFIX}${objectKey.replace(/.*\/([^/]+)$/, '$1')}`;
     console.log(`destObjectKey = ${destObjectKey}`);
-    await Storage.putFile(bucketName, destObjectKey, fileBuffer);
-    if (mustEncrypt) {
-      await Storage.deleteFile(bucketName, objectKey);
-    }
+    const url = await Storage.putFile(bucketName, destObjectKey, fileBuffer);
+    console.log(`url = ${url}`);
+    await Storage.deleteFile(bucketName, objectKey);
   }
   return ok();
 };
