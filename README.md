@@ -4,14 +4,30 @@ Code for serverless presentation demo using AWS Lambda.
 
 ## Before starting
 
-Generate a PGP key.
+1) Install the modules.
 
-Environment variables configuration (optional):
+    ```
+    $ npm install
+    ```
 
-| Variable | Description | Default value |
-| -------- | ----------- | ------------- |
-| S3_ENCRYPTED_PREFIX | Prefix for encrypted files. | `'encrypted/'` |
-| S3_API_VERSION | S3 API version. | `'2006-03-01'` |
+2) Generate a PGP key (see [PGP section](#PGP)).
+
+3) Configure environment variables (optional).
+
+    | Variable | Description | Default value |
+    | -------- | ----------- | ------------- |
+    | S3_ENCRYPTED_PREFIX | Prefix for encrypted files. | `'encrypted/'` |
+    | S3_API_VERSION | S3 API version. | `'2006-03-01'` |
+
+## Deploy package
+
+Create a deploy package to upload to AWS Lambda by running the command below:
+
+```
+$ npm run build
+```
+
+A `dist.zip` file will be created and may be uploaded to AWS Lambda.
 
 ## PGP
 
