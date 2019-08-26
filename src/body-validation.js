@@ -4,7 +4,7 @@ const joi = require('joi');
 
 const RequestBodySchema = joi.object({
   bucketName: joi.string().required(),
-  fileName: joi.string.required(),
+  fileName: joi.string().required(),
   fileContent: joi.string().required()
 });
 
