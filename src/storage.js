@@ -52,6 +52,20 @@ class Storage {
   }
 
   /**
+   * Deletes file from S3.
+   */
+  static deleteFile (bucketName, objectKey) {
+    const s3 = Storage._getS3Instance();
+    const params = {
+      Bucket: bucketName,
+      Key: objectKey
+    };
+    return new Promise((resolve, reject) => {
+      s3.deleteObject(params, (err, data) => err ? reject(err) : resolve());
+    });
+  }
+
+  /**
    * Gets the single S3 instance.
    * @private
    */
