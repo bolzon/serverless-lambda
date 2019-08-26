@@ -11,6 +11,7 @@ const reS3EncryptedPrefix = new RegExp(`^${S3_ENCRYPTED_PREFIX}`, 'i');
  * object is put into the S3 bucket.
  */
 exports.encryptS3File = async event => {
+  const startTime = Date.now();
   const body = event.body || event;
   console.log(JSON.stringify({ timestamp: Date.now(), body }, null, 2));
   for (const record of body.Records || []) {
@@ -28,5 +29,6 @@ exports.encryptS3File = async event => {
     const url = await Storage.putFile(bucketName, destObjectKey, fileBuffer);
     console.log(`url = ${url}`);
     await Storage.deleteFile(bucketName, objectKey);
+    console.log(`Total time: ${Date.now() - startTime}`);
   }
 };
