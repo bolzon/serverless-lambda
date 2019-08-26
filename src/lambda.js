@@ -26,7 +26,7 @@ exports.encryptS3File = async event => {
     if (mustEncrypt) {
       fileBuffer = await encrypt(fileBuffer);
     }
-    const destObjectKey = `${S3_ENCRYPTED_PREFIX}${objectKey.replace(/.*\/([^\/]+)$/, '$1')}`;
+    const destObjectKey = `${S3_ENCRYPTED_PREFIX}${objectKey.replace(/.*\/([^/]+)$/, '$1')}`;
     await Storage.putFile(bucketName, destObjectKey, fileBuffer);
     if (mustEncrypt) {
       await Storage.deleteFile(bucketName, objectKey);

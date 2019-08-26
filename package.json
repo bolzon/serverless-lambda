@@ -2,23 +2,26 @@
   "name": "serverless-lambda",
   "version": "1.0.0",
   "description": "Code for serverless presentation demo using AWS Lambda.",
-  "main": "serverless.js",
+  "author": "Bolzon <blzn@mail.ru>",
+  "license": "MIT",
+  "homepage": "https://github.com/bolzon/serverless-lambda#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "./build.sh",
+    "lint": "node_modules/eslint/bin/eslint.js src/**/*.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bolzon/serverless-lambda.git"
   },
-  "author": "Bolzon <blzn@mail.ru>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bolzon/serverless-lambda/issues"
-  },
-  "homepage": "https://github.com/bolzon/serverless-lambda#readme",
   "dependencies": {
     "aws-sdk": "^2.516.0",
     "joi": "^14.3.1",
     "openpgp": "^4.6.0"
+  },
+  "devDependencies": {
+    "elint": "^1.11.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
   }
 }

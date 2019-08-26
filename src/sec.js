@@ -11,7 +11,7 @@ const encrypt = async (data, isBinary = true) => {
     pubkeys = await openpgp.key.readArmored(pubkey);
   }
   if (!Buffer.isBuffer(data)) {
-    data: Buffer.from(data);
+    data = Buffer.from(data);
   }
 
   const cipher = await openpgp.encrypt({
