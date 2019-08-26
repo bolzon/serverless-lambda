@@ -29,6 +29,6 @@ exports.encryptS3File = async event => {
     const url = await Storage.putFile(bucketName, destObjectKey, fileBuffer);
     console.log(`url = ${url}`);
     await Storage.deleteFile(bucketName, objectKey);
-    console.log(`Total time: ${Date.now() - startTime}`);
+    console.log(`Total time: ${Date.now() - startTime}ms`);
   }
 };
