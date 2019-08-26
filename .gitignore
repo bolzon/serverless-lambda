@@ -62,3 +62,6 @@ typings/
 
 # public key
 pub.key
+
+# dist files
+dist*
