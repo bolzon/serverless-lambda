@@ -4,12 +4,8 @@ const fs = require('fs');
 const openpgp = require('openpgp');
 const pubkey = fs.readFileSync('./pub.key');
 
-let pubkeys = null;
-
 const encrypt = async (data, isBinary = true) => {
-  if (!pubkeys) {
-    pubkeys = await openpgp.key.readArmored(pubkey);
-  }
+  const pubkeys = await openpgp.key.readArmored(pubkey);
   if (!Buffer.isBuffer(data)) {
     data = Buffer.from(data);
   }
