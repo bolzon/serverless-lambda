@@ -2,10 +2,17 @@
 
 const fs = require('fs');
 const openpgp = require('openpgp');
-const pubkey = fs.readFileSync('./pub.key');
 
-const encrypt = async (data, isBinary = true) => {
-  const pubkeys = await openpgp.key.readArmored(pubkey);
+// reads PGP public key from source files
+const PUBKEY = fs.readFileSync('./pub.key');
+
+/**
+ * Encrypts data using a PGP public key.
+ * @param {Buffer} data File content.
+ * @param {boolean} returnAsBinary Flag to indicate response is binary or string base64 encoded (default: true).
+ */
+const encrypt = async (data, returnAsBinary = true) => {
+  const pubkeys = await openpgp.key.readArmored(PUBKEY);
   if (!Buffer.isBuffer(data)) {
     data = Buffer.from(data);
   }
@@ -13,10 +20,11 @@ const encrypt = async (data, isBinary = true) => {
   const cipher = await openpgp.encrypt({
     message: openpgp.message.fromBinary(data),
     publicKeys: pubkeys.keys,
-    armor: !isBinary
+    armor: !returnAsBinary
   });
 
-  if (isBinary) {
+  if (returnAsBinary) {
+    // converts response to binary
     const encrypted = cipher.message.packets.write();
     const reader = openpgp.stream.getReader(encrypted);
     const chunks = [];
@@ -29,7 +37,7 @@ const encrypt = async (data, isBinary = true) => {
     }
   }
 
-  return cipher.data || cipher;
+  return cipher.data || cipher; // string base64
 };
 
 module.exports = { encrypt };

@@ -41,10 +41,10 @@ class Storage {
           reject(err);
         } else {
           resolve({
-            content: data.Body,
-            type: data.ContentType,
-            encoding: data.ContentEncoding,
-            size: data.ContentLength
+            content: data.Body, // buffer
+            type: data.ContentType, // string
+            encoding: data.ContentEncoding, // string
+            size: data.ContentLength // integer
           });
         }
       });
