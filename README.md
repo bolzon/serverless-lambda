@@ -10,15 +10,16 @@ You must have an [AWS account](https://aws.amazon.com/resources/create-account/)
 
 2) Create a [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html#create-bucket-intro) on AWS.
 
-3) Create 2 folders in the created bucket:
-    - `uploads/` - files will be uploaded here
-    - `encrypted/` - encrypted files will be pasted here
+3) Create 2 folders in the bucket:
+
+    - _uploads/_ - files will be uploaded here
+    - _encrypted/_ - encrypted files will be pasted here
 
 4) Create a [Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/getting-started-create-function.html) on AWS (e.g. _encrypt-s3-files_).
 
-5) Create a Lambda package from source files (see [deploy section](#deploy-package)).
+5) Create a Lambda package locally from source files (see [deploy section](#deploy-package)).
 
-6) Upload the Lambda package to your Lambda function (_dist.zip_ file).
+6) Upload this package (_dist.zip_ file) to your Lambda function.
 
 7) Configure Lambda handler to _"lambda.encryptS3File"_.
 
@@ -27,12 +28,13 @@ You must have an [AWS account](https://aws.amazon.com/resources/create-account/)
 9) Save changes.
 
 10) From Lambda designer, add a S3 trigger to your Lambda function with the following configurations:
+
     - Event type: _PUT_
     - Prefix: _uploads/_
 
 11) Upload a file to the _uploads/_ folder.
 
-12) Check Lambda logs in CloudWatch.
+12) Check Lambda logs in [CloudWatch](https://aws.amazon.com/cloudwatch/).
 
 **Optional:** Configure environment variables as needed (optional, see [variables section](#environment-variables)).
 
