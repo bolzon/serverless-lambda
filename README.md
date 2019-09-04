@@ -1,10 +1,18 @@
 # Serverless Lambda Demo
 
-Code for serverless presentation demo using AWS Lambda.
+This repo contains demo code that was used in my presentation about **Serverless** using AWS Lambda.
+
+## Architecture
+
+The system architecture designed to demonstrate the use of AWS Lambda function is shown below.
+
+![Lambda architecture](architecture.jpg)
 
 ## Before starting
 
-You must have an [AWS account](https://aws.amazon.com/resources/create-account/) to run this example.
+First of all, in order to deploy and run this code, you must have an active [AWS account](https://aws.amazon.com/resources/create-account/).
+
+## Steps for demo
 
 1) Generate a PGP key (see [PGP section](#pgp)).
 
@@ -78,7 +86,7 @@ Export the PGP pub key.
 $ gpg --armor --export serverless@demo > src/pub.key
 ```
 
-## Danger Zone
+## Danger zone
 
 You can also delete the secret/pub keys if it's not used anymore.
 
@@ -88,3 +96,6 @@ You can also delete the secret/pub keys if it's not used anymore.
 $ gpg --delete-secret-key serverless@demo # secret
 $ gpg --delete-key serverless@demo # pub
 ```
+
+---
+August 2019, design and code by [Alexandre Bolzon](https://about.me/bolzon).
