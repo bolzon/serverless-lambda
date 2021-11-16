@@ -14,7 +14,7 @@
     "url": "git+https://github.com/bolzon/serverless-lambda.git"
   },
   "dependencies": {
-    "aws-sdk": "^2.516.0",
+    "aws-sdk": "^2.814.0",
     "openpgp": "^4.6.0"
   },
   "devDependencies": {
